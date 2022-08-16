@@ -27,3 +27,6 @@ app.use(require("./routes/initialPage"));
 //? usuarios
 app.use(require("./routes/users/users"));
 app.use(require("./routes/users/login"));
+
+//? Period
+app.use(require("./routes/period/period"));
