@@ -30,3 +30,10 @@ app.use(require("./routes/users/login"));
 
 //? Period
 app.use(require("./routes/period/period"));
+
+//? Incomes
+app.use(require("./routes/incomes/income"));
+
+//? expences
+app.use(require("./routes/expences/expences"));
+
