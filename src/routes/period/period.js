@@ -29,7 +29,7 @@ router.get("/period/:id", (req, res) => {
   );
 });
 
-//! Get income by period id
+//! Get period by userId
 router.get("/period-by-user/:userId", (req, res) => {
   const { userId } = req.params;
   const query =
@@ -41,6 +41,38 @@ router.get("/period-by-user/:userId", (req, res) => {
       console.log(err);
     }
   });
+});
+
+//! Get total_expences by periodID
+router.get("/total-expences/:periodId", (req, res) => {
+  const { periodId } = req.params;
+  mySqlConnection.query(
+    "select p.id as 'period_id', p.name, sum(e.amount) as 'total_expences' from period p join expences e on e.id_period = p.id where p.id = ?",
+    [periodId],
+    (err, rows, fields) => {
+      if (!err) {
+        res.send(rows);
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
+//! Get total_incomes by periodID
+router.get("/total-incomes/:periodId", (req, res) => {
+  const { periodId } = req.params;
+  mySqlConnection.query(
+    "select p.id as 'period_id', p.name, sum(i.amount) as 'total_expences' from period p join incomes i on i.id_period = p.id where p.id = ?",
+    [periodId],
+    (err, rows, fields) => {
+      if (!err) {
+        res.send(rows);
+      } else {
+        console.log(err);
+      }
+    }
+  );
 });
 
 //! Crear un periodo =====================================================================================

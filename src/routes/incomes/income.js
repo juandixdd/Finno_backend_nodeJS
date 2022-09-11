@@ -33,7 +33,7 @@ router.get("/income/:id", (req, res) => {
 router.get("/incomes-by-period/:periodId", (req, res) => {
   const { periodId } = req.params;
   const query =
-    "select * from incomes where id_period = ? order by amount desc";
+    "select i.*, p.name as 'period_name' from incomes i join period p on p.id = i.id_period where id_period = ? order by amount desc";
   mySqlConnection.query(query, [periodId], (err, rows, fields) => {
     if (!err) {
       res.send(rows);
@@ -59,8 +59,23 @@ router.post("/income", (req, res) => {
       }
     );
   }
-
   createIncome();
+});
+
+//! Delete
+router.delete("/income/:id", (req, res) => {
+  const { id } = req.params;
+  mySqlConnection.query(
+    "DELETE FROM incomes WHERE id = ?",
+    [id],
+    (err, rows, fields) => {
+      if (!err) {
+        res.json({ status: "income eliminado" });
+      } else {
+        console.log(err);
+      }
+    }
+  );
 });
 
 module.exports = router;

@@ -30,4 +30,18 @@ router.get("/expence/:id", (req, res) => {
     );
   });
 
+  //! Get expence by period id
+router.get("/expences-by-period/:periodId", (req, res) => {
+  const { periodId } = req.params;
+  const query =
+    "select e.*, p.name as 'period_name' from expences e join period p on p.id = e.id_period where id_period = ? order by amount desc";
+  mySqlConnection.query(query, [periodId], (err, rows, fields) => {
+    if (!err) {
+      res.send(rows);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 module.exports = router;
