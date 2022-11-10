@@ -43,6 +43,20 @@ router.get("/incomes-by-period/:periodId", (req, res) => {
   });
 });
 
+//! Get sum of expences
+router.get("/incomes-sum/:periodId", (req, res) => {
+  const { periodId } = req.params;
+  const query =
+    "select sum(i.amount) as 'incomes_sum' from incomes i where id_period = ?";
+  mySqlConnection.query(query, [periodId], (err, rows, fields) => {
+    if (!err) {
+      res.send(rows);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 //! Create
 router.post("/income", (req, res) => {
   function createIncome() {
