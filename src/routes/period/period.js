@@ -30,11 +30,21 @@ router.get("/period/:id", (req, res) => {
 });
 
 //! Get period by userId
-router.get("/period-by-user/:userId", (req, res) => {
-  const { userId } = req.params;
-  const query =
-    "select * from period where id_user = ? order by date_finish  desc ";
-  mySqlConnection.query(query, [userId], (err, rows, fields) => {
+router.get("/period-by-user/year/:userId/:year", (req, res) => {
+  const { userId, year } = req.params;
+  const query = `
+    select
+    *
+  from
+    period
+  where
+    id_user = ?
+  and 
+    year(date_start) = ?
+  order by
+    date_finish desc
+    `;
+  mySqlConnection.query(query, [userId, year], (err, rows, fields) => {
     if (!err) {
       res.send(rows);
     } else {
