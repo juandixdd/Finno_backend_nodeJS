@@ -88,13 +88,13 @@ router.get("/total-incomes/:periodId", (req, res) => {
 //! Crear un periodo =====================================================================================
 router.post("/period", (req, res) => {
   function createUser() {
-    const { name, id_user, dateFinish, dateStart } = req.body;
+    const { name, id_user, date_start, date_finish } = req.body;
     mySqlConnection.query(
-      "INSERT INTO period (name, id_user, dateStart, dateFinish) VALUES (?,?,?,?,?)",
-      [name, id_user, dateFinish, dateStart],
+      "INSERT INTO period (name, id_user, date_start, date_finish) VALUES (?,?,?,?)",
+      [name, id_user, date_start, date_finish],
       (err, rows, fields) => {
         if (!err) {
-          res.json({ status: "Periodo creado", statusCode: 200 });
+          res.json({ message: "Periodo creado", status: 200 });
         } else {
           console.log(err);
         }
